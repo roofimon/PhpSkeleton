@@ -35,13 +35,13 @@ class CaptchaTest extends PHPUnit_Framework_TestCase {
     }
      */
     function testResultCaptchaWhenLeftOperandIsString() {
-        $captcha = new Captcha();
-        $result = $captcha->toString(1, 1, 1, 1);
+        $capchas = new Captcha();
+        $result = $captchas->toString(1, 1, 1, 1);
         $this->assertEquals("One + 1",$result);
     }
     function testResultCaptchaWhenLeftOperandIsInteger() {
-        $captcha = new Captcha();
-        $result = $captcha->toString(2, 1, 1, 1);
+        $captchas = new Captcha();
+        $result = $captchas->toString(2, 1, 1, 1);
         $this->assertEquals("1 + One",$result);
     }
     /*
