@@ -29,7 +29,7 @@ function captcha($a, $b, $c, $d) {
             }
 
             if($c == 3){
-                $c = "x";
+                $c = "*";
             }
 
             if($c == 2)
