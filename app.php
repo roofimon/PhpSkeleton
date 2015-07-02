@@ -16,7 +16,7 @@ function captcha($a, $b, $c, $d) {
     $f = array(
         1 => "+", 
         2 => "-",
-        3 => "x",
+        3 => "*",
     );
     if(($a < 1 or $a > 2) or ($c < 1 or $c > 3)){
         return "You shouldn't do this to me :(" . "\n";
