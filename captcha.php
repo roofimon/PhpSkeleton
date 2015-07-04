@@ -1,6 +1,33 @@
 <?php
-function captcha($pattern, $b, $c, $d) {
-    $NUMBER_STRING = array(
+function captcha($pattern, $left, $operator, $right) {
+        if(isStringNuberPattern($pattern))
+        {
+            $left = createStringOperand($left);
+            $operator = createOperator($operator);
+            $right = createIntegerOperand($right);
+        }
+        else if(isNuberStringPattern($pattern)){
+            $left = createIntegerOperand($left);
+            $operator = createOperator($operator);
+            $right = createStringOperand($right);
+        }
+        return $left . " " . $operator . " " . $right ;
+}
+
+function createIntegerOperand($operand){
+    return strval($operand);
+}
+
+function isNuberStringPattern($pattern) {
+    return $pattern==2;
+}
+
+function isStringNuberPattern($pattern) {
+    return $pattern==1;
+}
+
+function createStringOperand($operand){
+    $STRING_OPERAND = array(
         1 => "One",
         2 => "Two",
         3 => "Three",
@@ -11,47 +38,10 @@ function captcha($pattern, $b, $c, $d) {
         8 => "Eight",
         9 => "Nine",
     );
+    return $STRING_OPERAND[$operand];
+}
 
-    $f = array(
-        1 => "+",
-        2 => "-",
-        3 => "*",
-    );
-    if(($pattern < 1 or $pattern > 2) or ($c < 1 or $c > 3)){
-        return "You shouldn't do this to me :(" . "\n";
-    }
-
-        if($pattern==1)
-        {
-            if($c == 1){
-                $c = "+";
-            }
-
-            if($c == 3){
-                $c = "*";
-            }
-
-            if($c == 2)
-            {
-                $c = "-";
-            }
-
-            $b = $NUMBER_STRING[$b];
-        }
-        else if($pattern==2){
-            if($c == 1){
-                $c = "+";
-            }
-
-            if($c == 3){
-                $c = "*";
-            }
-
-            if($c == 2)
-            {
-                $c = "-";
-            }
-            $d = $NUMBER_STRING[$d];
-        }
-        return $b . " " . $c . " " . $d ;
+function createOperator($operator){
+    $OPERATOR_SIGN = array(1=>"+", 2=>"-", 3=>"*");
+    return $OPERATOR_SIGN[$operator];
 }
