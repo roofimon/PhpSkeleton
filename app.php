@@ -2,7 +2,7 @@
 require_once __DIR__.'/vendor/autoload.php';
 function captcha($a, $b, $c, $d) {
     $e = array(
-        1 => "One", 
+        1 => "One",
         2 => "Two",
         3 => "Three",
         4 => "Four",
@@ -14,7 +14,7 @@ function captcha($a, $b, $c, $d) {
     );
 
     $f = array(
-        1 => "+", 
+        1 => "+",
         2 => "-",
         3 => "*",
     );
@@ -64,8 +64,7 @@ $app->get('/', function () {
     return "";
 });
 $app->get('/captcha', function () use ($app) {
-    $pattern = rand(1, 2);
-    return captcha($pattern, rand(1,9), rand(1,3), rand(1,9));
+    return captcha($rand(1,2), rand(1,9), rand(1,3), rand(1,9));
 });
 
 $app->run();
