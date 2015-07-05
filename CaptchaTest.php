@@ -1,58 +1,55 @@
 <?php
-require "app.php";
+require_once 'captcha.php';
+require_once 'CaptchaController.php';
 class CaptchaTest extends PHPUnit_Framework_TestCase {
-    /*
-    function testLeftOperandShouldBeOne(){
-        $captcha = new Captcha(1, 1, 1, 1);
-        $leftOperand = $captcha->getLeftOperand();
-        $this->assertEquals("One", $leftOperand->toString());
 
-    }   
-
-    function testResultOperatorShouldBePlus() {
-        $captcha = new Captcha(1, 1, 1, 1);
-        $operator = $captcha->getOperator();
-        $this->assertEquals("+", $operator->toString());
+    function testController(){
+        $stubRandomizer = $this->getMock('Randomizer');
+        $stubRandomizer->expects($this->any())
+          ->method('pattern')
+          ->will($this->returnValue(1));
+        $stubRandomizer->expects($this->any())
+            ->method('operator')
+            ->will($this->returnValue(1));
+        $stubRandomizer->expects($this->any())
+              ->method('operand')
+              ->will($this->returnValue(1));
+        $controller = new CaptchaController($stubRandomizer);
+        $captcha = $controller->buildCaptcha();
+        $this->assertEquals("One + 1", $captcha->toString());
     }
 
-    function testRightOperandShouldBe1(){
+    function testCaptcha1111ShouldBeOnePlus1() {
         $captcha = new Captcha(1, 1, 1, 1);
-        $rightOperand = $captcha->getRightOperand();
-        $this->assertEquals("1", $rightOperand->toString());
+        $this->assertEquals("One + 1", $captcha->toString());
     }
 
-    function testLeftOperandShouldBe1(){
+    function testCaptcha1121ShouldBeOneMinus1() {
+        $captcha = new Captcha(1, 1, 2, 1);
+        $this->assertEquals("One - 1", $captcha->toString());
+    }
+
+    function testCaptcha2111ShouldBe1PlusOne() {
         $captcha = new Captcha(2, 1, 1, 1);
-        $leftOperand = $captcha->getLeftOperand();
-        $this->assertEquals("1", $leftOperand->toString());
-
+        $this->assertEquals("1 + One", $captcha->toString());
     }
 
-    function testRightOperandShouldBeOne() {
-        $captcha = new Captcha(2, 1, 1, 1);
-        $rightOperand = $captcha->getRightOperand();
-        $this->assertEquals("One", $rightOperand->toString());
+    function testWheninputIs1111ResultShouldBeOnePlus1() {
+        $this->assertEquals("One + 1", captcha(1, 1, 1 ,1));
     }
-     */
-    function testResultCaptchaWhenLeftOperandIsString() {
-        $captcha = new Captcha();
-        $result = $captcha->toString(1, 1, 1, 1);
-        $this->assertEquals("One + 1",$result);
+    function testWheninputIs1121ResultShouldBeOneMinus1() {
+        $this->assertEquals("One - 1", captcha(1, 1, 2 ,1));
     }
-    function testResultCaptchaWhenLeftOperandIsInteger() {
-        $captcha = new Captcha();
-        $result = $captcha->toString(2, 1, 1, 1);
-        $this->assertEquals("1 + One",$result);
+    function testWheninputIs1131ResultShouldBeOneMultiply1() {
+        $this->assertEquals("One * 1", captcha(1, 1, 3 ,1));
     }
-    /*
-    function testExceptionCaptchaWhenLeftOperandIsZero() {
-        try {
-            $captcha = new Captcha(2, 0, 1, 1);
-            $this->fail("Invalid Range Operand");
-        } catch (InvalidRangeException $e) {
-
-        }
-
+    function testWheninputIs2111ResultShouldBe1PlusOne() {
+        $this->assertEquals("1 + One", captcha(2, 1, 1 ,1));
     }
-     */
+    function testWheninputIs2121ResultShouldBe1MinusOne() {
+        $this->assertEquals("1 - One", captcha(2, 1, 2 ,1));
+    }
+    function testWheninputIs2121ResultShouldBe1MultiplyOne() {
+        $this->assertEquals("1 * One", captcha(2, 1, 3 ,1));
+    }
 }
