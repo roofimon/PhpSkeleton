@@ -64,8 +64,7 @@ $app->get('/', function () {
     return "";
 });
 $app->get('/captcha', function () use ($app) {
-    $pattern = rand(1, 2);
-    return captcha($pattern, rand(1,9), rand(1,3), rand(1,9));
+    return captcha(rand(1, 2), rand(1,9), rand(1,3), rand(1,9));
 });
 
 $app->run();
